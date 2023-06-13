@@ -1,6 +1,7 @@
 import 'package:basicfoodapp/constants.dart';
 import 'package:basicfoodapp/function.dart';
 import 'package:basicfoodapp/product.dart';
+import 'package:basicfoodapp/product_item.dart';
 import 'package:flutter/material.dart';
 
 
@@ -27,6 +28,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final FocusNode _focusNode=FocusNode();
+
+  @override
+  void dispose(){
+    super.dispose();
+        _focusNode.unfocus();
+  }
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
@@ -144,7 +152,8 @@ class _HomeState extends State<Home> {
                                 child: Row(
                                   children: PRODUCT_DATA.map((data) => InkWell(
                                     onTap: (){
-
+                                      _focusNode.unfocus();
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductPage(productData: data)));
                                     },
                                       child: Product(
                                         productData: data,
